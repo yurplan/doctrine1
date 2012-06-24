@@ -36,7 +36,7 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
     {
         parent::prepareTables();
     }
-    
+
     public function prepareData()
     {
         $user = new User();
@@ -45,7 +45,7 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
         $user->Phonenumber[0]->phonenumber = '555 123';
         $user->Phonenumber[1]->phonenumber = '555 448';
         $user->save();
-        
+
         # Create an existing group
         $group = new Group();
         $group->name = 'Group One';
@@ -65,7 +65,7 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
 
         // delete a Phonenumber
         array_pop($userArray['Phonenumber']);
-        
+
         // add group
         $userArray['Group'][]['name'] = 'New Group'; # This is a n-m relationship
         // add a group which exists
@@ -100,8 +100,8 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
         $this->assertEqual($user->Phonenumber->count(), 1);
         $this->assertEqual($user->Phonenumber[0]->phonenumber, '555 321');
         $this->assertEqual($user->Email->address, 'johndow@mail.com');
-        $this->assertEqual($user->Group[0]->name, 'New Group');
-        $this->assertEqual($user->Group[1]->name, 'Group One');
+        $this->assertEqual($user->Group[0]->name, 'Group One');
+        $this->assertEqual($user->Group[1]->name, 'New Group');
     }
 
     public function testSynchronizeAddRecord()
@@ -111,7 +111,7 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
         $userArray['Phonenumber'][] = array('phonenumber' => '333 238');
 
         $user->synchronizeWithArray($userArray);
-        
+
         $this->assertEqual($user->Phonenumber->count(), 2);
         $this->assertEqual($user->Phonenumber[1]->phonenumber, '333 238');
         $user->save();
@@ -120,9 +120,9 @@ class Doctrine_Record_Synchronize_TestCase extends Doctrine_UnitTestCase
     public function testSynchronizeAfterAddRecord()
     {
         $user = Doctrine_Query::create()->from('User u, u.Email, u.Phonenumber')->fetchOne();
-        
+
         $this->assertEqual($user->Phonenumber->count(), 2);
-        $this->assertEqual($user->Phonenumber[1]->phonenumber, '333 238');
+        $this->assertEqual($user->Phonenumber[0]->phonenumber, '333 238');
     }
 
     public function testSynchronizeRemoveRecord()
