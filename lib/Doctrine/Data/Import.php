@@ -107,7 +107,7 @@ class Doctrine_Data_Import extends Doctrine_Data
      *
      * @return void
      */
-    public function doImport($append = false)
+    public function doImport($append = false, $useTransaction = true)
     {
         $array = $this->doParsing();
 
@@ -115,7 +115,7 @@ class Doctrine_Data_Import extends Doctrine_Data
             $this->purge(array_reverse(array_keys($array)));
         }
 
-        $this->_loadData($array);
+        $this->_loadData($array, $useTransaction);
     }
 
     /**
@@ -290,7 +290,7 @@ class Doctrine_Data_Import extends Doctrine_Data
      * @param string $array
      * @return void
      */
-    protected function _loadData(array $array)
+    protected function _loadData(array $array, $useTransaction = true)
     {
         $nestedSets = array();
 
@@ -338,16 +338,31 @@ class Doctrine_Data_Import extends Doctrine_Data
         foreach ($manager as $connection) {
             $tree = $connection->unitOfWork->buildFlushTree(array_keys($array));
 
-            $connection->beginTransaction();
-            foreach ($tree as $model) {
-                foreach ($this->_importedObjects as $obj) {
+            if ($useTransaction) {
+                $connection->beginInternalTransaction();
+            }
 
-                    if ($obj instanceof $model) {
-                        $obj->save();
+            try {
+                foreach ($tree as $model) {
+                    foreach ($this->_importedObjects as $obj) {
+
+                        if ($obj instanceof $model) {
+                            $obj->save();
+                        }
                     }
                 }
+
+                if ($useTransaction) {
+                    $connection->commit();
+                }
+
+            } catch (Exception $e) {
+                if ($useTransaction) {
+                    $connection->rollback();
+                }
+
+                throw new Doctrine_Data_Exception('Unable to load object for model "'. $model . '"');
             }
-            $connection->commit();
         }
     }
 
