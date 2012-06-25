@@ -30,7 +30,7 @@
  * @since       1.0
  * @version     $Revision$
  */
-class Doctrine_Data_Export_TestCase extends Doctrine_UnitTestCase 
+class Doctrine_Data_Export_TestCase extends Doctrine_UnitTestCase
 {
     public function prepareTables()
     {
@@ -60,7 +60,7 @@ class Doctrine_Data_Export_TestCase extends Doctrine_UnitTestCase
             $i->Translation->delete();
             $i->delete();
 
-            Doctrine_Core::loadData('test.yml');
+            Doctrine_Core::loadData('test.yml', false, false);
 
             $q = Doctrine_Query::create()
                 ->from('I18nTestExport e')

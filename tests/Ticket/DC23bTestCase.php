@@ -30,7 +30,7 @@
  * @since       1.0
  * @version     $Revision$
  */
-class Doctrine_Ticket_DC23b_TestCase extends Doctrine_UnitTestCase 
+class Doctrine_Ticket_DC23b_TestCase extends Doctrine_UnitTestCase
 {
     public function prepareTables()
     {
@@ -45,15 +45,15 @@ class Doctrine_Ticket_DC23b_TestCase extends Doctrine_UnitTestCase
     {
         $yml = <<<END
 ---
-Ticket_Product: 
-  Product_1: 
+Ticket_Product:
+  Product_1:
     name: book
     Site:
       name: test
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -84,8 +84,8 @@ Ticket_Multiple:
   ISBN:
     name: isbn
 
-Ticket_Product: 
-  Product_1: 
+Ticket_Product:
+  Product_1:
     name: book2
 
 Ticket_MultipleValue:
@@ -96,7 +96,7 @@ Ticket_MultipleValue:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -129,8 +129,8 @@ Ticket_Multiple:
   ISBN2:
     name: isbn2
 
-Ticket_Product: 
-  Product_1: 
+Ticket_Product:
+  Product_1:
     name: book3
     MultipleValues:
       Multi_1:
@@ -139,7 +139,7 @@ Ticket_Product:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 

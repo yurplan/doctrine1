@@ -30,7 +30,7 @@
  * @since       1.0
  * @version     $Revision$
  */
-class Doctrine_Data_Import_TestCase extends Doctrine_UnitTestCase 
+class Doctrine_Data_Import_TestCase extends Doctrine_UnitTestCase
 {
     public function prepareTables()
     {
@@ -43,22 +43,22 @@ class Doctrine_Data_Import_TestCase extends Doctrine_UnitTestCase
         $this->tables[] = 'I18nNumberLang';
         parent::prepareTables();
     }
-    
+
     public function testInlineMany()
     {
         $yml = <<<END
 ---
-User: 
-  User_1: 
+User:
+  User_1:
     name: jwage
     password: changeme
-    Phonenumber: 
-      Phonenumber_1: 
+    Phonenumber:
+      Phonenumber_1:
         phonenumber: 6155139185
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -93,7 +93,7 @@ Album:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -118,8 +118,8 @@ END;
     {
         $yml = <<<END
 ---
-User: 
-  User_1: 
+User:
+  User_1:
     name: jwage2
     password: changeme
     Phonenumber: [Phonenumber_1, Phonenumber_2]
@@ -131,7 +131,7 @@ Phonenumber:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -169,7 +169,7 @@ I18nTestImport:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -188,7 +188,7 @@ END;
             $this->fail($e->getMessage());
         }
 
-        unlink('test.yml'); 
+        unlink('test.yml');
     }
 
     public function testImportNestedSetData()
@@ -209,7 +209,7 @@ ImportNestedSet:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -242,9 +242,9 @@ END;
             $this->fail();
         }
 
-        unlink('test.yml'); 
+        unlink('test.yml');
     }
-    
+
     public function testImportNestedSetMultipleTreeData()
     {
         $yml = <<<END
@@ -282,7 +282,7 @@ ImportNestedSetMultipleTree:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -315,7 +315,7 @@ END;
             $this->assertEqual($i[4]['rgt'], 3);
             $this->assertEqual($i[4]['level'], 1);
             $this->assertEqual($i[4]['root_id'], $i[3]['root_id']);
-            
+
             $this->assertEqual($i[5]['name'], 'Item 2.2');
             $this->assertEqual($i[5]['lft'], 4);
             $this->assertEqual($i[5]['rgt'], 11);
@@ -327,7 +327,7 @@ END;
             $this->fail();
         }
 
-        unlink('test.yml'); 
+        unlink('test.yml');
     }
 
     public function testMany2ManyManualDataFixtures()
@@ -351,7 +351,7 @@ Group:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -367,7 +367,7 @@ END;
 
         unlink('test.yml');
     }
-    
+
     public function testInvalidElementThrowsException()
     {
         self::prepareTables();
@@ -389,12 +389,12 @@ Group:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
             $this->fail();
         } catch (Exception $e) {
             $this->pass();
         }
-        
+
         unlink('test.yml');
     }
 
@@ -491,7 +491,7 @@ Group:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -526,7 +526,7 @@ I18nNumberLang:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -546,7 +546,7 @@ END;
             $this->fail($e->getMessage());
         }
 
-        unlink('test.yml'); 
+        unlink('test.yml');
     }
 
 }

@@ -12,16 +12,12 @@ $tickets = new GroupTest('Tickets Tests', 'tickets');
 $excludeTickets = array(
     '1830', // MySQL specific error
     '1876b',
-    '1783',
+    '1783', // bigint
     '1935',
     '2015',
     '2292',
-    '2355',
     'DC521', // PostgreSQL specific error
-    'DC7',
-    'DC23',
-    'DC23b',
-    'DC147',
+    'DC7', // weird, hydrate on demand
 );
 
 $ticketTestCases = glob(dirname(__FILE__) . '/Ticket/*TestCase.php');

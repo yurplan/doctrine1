@@ -30,7 +30,7 @@
  * @since       1.0
  * @version     $Revision$
  */
-class Doctrine_Ticket_2355_TestCase extends Doctrine_UnitTestCase 
+class Doctrine_Ticket_2355_TestCase extends Doctrine_UnitTestCase
 {
     public function prepareTables()
     {
@@ -77,7 +77,7 @@ Episode:
 END;
         try {
             file_put_contents('test.yml', $yml);
-            Doctrine_Core::loadData('test.yml', true);
+            Doctrine_Core::loadData('test.yml', true, false);
 
             $this->conn->clear();
 
@@ -157,7 +157,7 @@ class Episode extends Doctrine_Record
 
 
         $this->index('episode', array(
-             'fields' => 
+             'fields' =>
              array(
               0 => 'season',
               1 => 'number',
