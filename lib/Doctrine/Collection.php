@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Collection.php 7686 2010-08-24 16:54:40Z jwage $
+ *  $Id$
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -28,7 +28,7 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.org
  * @since       1.0
- * @version     $Revision: 7686 $
+ * @version     $Revision$
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Collection extends Doctrine_Access implements Countable, IteratorAggregate, Serializable
@@ -160,7 +160,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
 
         $vars['_table'] = $vars['_table']->getComponentName();
 
-        return serialize($vars);
+        return Doctrine_Lib::serialize($vars);
     }
 
     /**
@@ -173,7 +173,7 @@ class Doctrine_Collection extends Doctrine_Access implements Countable, Iterator
         $manager    = Doctrine_Manager::getInstance();
         $connection    = $manager->getCurrentConnection();
 
-        $array = unserialize($serialized);
+        $array = Doctrine_Lib::unserialize($serialized);
 
         foreach ($array as $name => $values) {
             $this->$name = $values;

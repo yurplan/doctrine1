@@ -1,6 +1,6 @@
 <?php
 /*
- *  $Id: Lib.php 7490 2010-03-29 19:53:27Z jwage $
+ *  $Id$
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -27,15 +27,17 @@
  * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link        www.doctrine-project.org
  * @since       1.0
- * @version     $Revision: 7490 $
+ * @version     $Revision$
  * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
  */
 class Doctrine_Lib
 {
+    protected static $serializer = null;
+
     /**
      * Generates a human readable representation of a record's state.
      *
-     * This method translates a Doctrine_Record state (integer constant) 
+     * This method translates a Doctrine_Record state (integer constant)
      * in an english string.
      * @see Doctrine_Record::STATE_* constants
      *
@@ -128,7 +130,7 @@ class Doctrine_Lib
         $r[] = 'Table in memory     : ' . $connection->count();
         $r[] = 'Driver name         : ' . $connection->getAttribute(Doctrine_Core::ATTR_DRIVER_NAME);
         $r[] = "</pre>";
-        
+
         return implode("\n",$r)."<br>";
     }
 
@@ -146,16 +148,16 @@ class Doctrine_Lib
         $r[] = "Component   : ".$table->getComponentName();
         $r[] = "Table       : ".$table->getTableName();
         $r[] = "</pre>";
-        
+
         return implode("\n",$r)."<br>";
     }
 
     /**
-     * Generates a colored sql query. 
+     * Generates a colored sql query.
      *
      * This methods parses a plain text query and generates the html needed
      * for visual formatting.
-     * 
+     *
      * @todo: What about creating a config varialbe for the color?
      * @param string $sql   plain text query
      * @return string       the formatted sql code
@@ -185,7 +187,7 @@ class Doctrine_Lib
     /**
      * Generates a string representation of a collection.
      *
-     * This method returns an html dump of a collection of records, containing 
+     * This method returns an html dump of a collection of records, containing
      * all data.
      *
      * @param Doctrine_Collection $collection
@@ -198,7 +200,7 @@ class Doctrine_Lib
         $r[] = 'data : ' . Doctrine_Core::dump($collection->getData(), false);
         //$r[] = 'snapshot : ' . Doctrine_Core::dump($collection->getSnapshot());
         $r[] = "</pre>";
-        
+
         return implode("\n",$r);
     }
 
@@ -234,7 +236,7 @@ class Doctrine_Lib
              case 2:
                 $args = func_get_args();
                 $args[2] = array();
-                
+
                 if (is_array($args[0]) && is_array($args[1]))
                 {
                     foreach (array_unique(array_merge(array_keys($args[0]),array_keys($args[1]))) as $key)
@@ -270,7 +272,7 @@ class Doctrine_Lib
 
     /**
      * Makes the directories for a path recursively.
-     * 
+     *
      * This method creates a given path issuing mkdir commands for all folders
      * that do not exist yet. Equivalent to 'mkdir -p'.
      *
@@ -327,7 +329,7 @@ class Doctrine_Lib
 
     /**
      * Copy all directory content in another one.
-     * 
+     *
      * This method recursively copies all $source files and subdirs in $dest.
      * If $source is a file, only it will be copied in $dest.
      *
@@ -369,8 +371,8 @@ class Doctrine_Lib
 
     /**
      * Checks for a valid class name for Doctrine coding standards.
-     * 
-     * This methods tests if $className is a valid class name for php syntax 
+     *
+     * This methods tests if $className is a valid class name for php syntax
      * and for Doctrine coding standards. $className must use camel case naming
      * and underscores for directory separation.
      *
@@ -384,5 +386,23 @@ class Doctrine_Lib
         }
 
         return true;
+    }
+
+    public static function serialize($object)
+    {
+        if (null === self::$serializer) {
+            self::$serializer = function_exists('igbinary_serialize') ? 'igbinary' : 'php';
+        }
+
+        return 'igbinary' == self::$serializer ? igbinary_serialize($object) : serialize($object);
+    }
+
+    public static function unserialize($string)
+    {
+        if (null === self::$serializer) {
+            self::$serializer = function_exists('igbinary_serialize') ? 'igbinary' : 'php';
+        }
+
+        return 'igbinary' == self::$serializer ? igbinary_unserialize($string) : unserialize($string);
     }
 }

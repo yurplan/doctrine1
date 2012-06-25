@@ -2148,9 +2148,9 @@ class Doctrine_Query extends Doctrine_Query_Abstract implements Countable
             if ($cached === false) {
                 // cache miss
                 $results = $this->getConnection()->fetchAll($q, $params);
-                $cacheDriver->save($hash, serialize($results), $this->getResultCacheLifeSpan());
+                $cacheDriver->save($hash, Doctrine_Lib::serialize($results), $this->getResultCacheLifeSpan());
             } else {
-                $results = unserialize($cached);
+                $results = Doctrine_Lib::unserialize($cached);
             }
         } else {
             $results = $this->getConnection()->fetchAll($q, $params);

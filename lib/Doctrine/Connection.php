@@ -1616,7 +1616,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
         $vars = get_object_vars($this);
         $vars['dbh'] = null;
         $vars['isConnected'] = false;
-        return serialize($vars);
+        return Doctrine_Lib::serialize($vars);
     }
 
     /**
@@ -1627,7 +1627,7 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
      */
     public function unserialize($serialized)
     {
-        $array = unserialize($serialized);
+        $array = Doctrine_Lib::unserialize($serialized);
 
         foreach ($array as $name => $values) {
             $this->$name = $values;
