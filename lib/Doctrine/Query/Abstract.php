@@ -403,7 +403,7 @@ abstract class Doctrine_Query_Abstract
      *
      * @param string $part the name of the query part to get
      *
-     * @return mixed this object
+     * @return string this object
      * @throws Doctrine_Query_Exception if trying to get an unknown query part
      */
     public function getSqlQueryPart($part)
