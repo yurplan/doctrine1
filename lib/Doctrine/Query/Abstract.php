@@ -405,7 +405,7 @@ abstract class Doctrine_Query_Abstract
      *
      * @param string $part the name of the query part to get
      *
-     * @return string this object
+     * @return mixed
      * @throws Doctrine_Query_Exception if trying to get an unknown query part
      */
     public function getSqlQueryPart($part)
@@ -960,7 +960,7 @@ abstract class Doctrine_Query_Abstract
      *
      * @param array $params
      *
-     * @return PDOStatement|int The executed PDOStatement.
+     * @return PDOStatement|int The executed PDOStatement or the number of affected rows
      * @throws Doctrine_Connection_Exception
      * @throws Doctrine_Exception
      */
