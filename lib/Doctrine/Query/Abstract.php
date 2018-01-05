@@ -652,7 +652,10 @@ abstract class Doctrine_Query_Abstract
      * The condition is applied to the FROM component in the WHERE, but the condition is applied to
      * JOINS in the ON condition and not the WHERE
      *
-     * @return string $str  SQL condition string
+     * @param string $componentAlias
+     *
+     * @return string|null $str SQL condition string
+     * @throws Doctrine_Query_Exception
      */
     public function getInheritanceCondition($componentAlias)
     {
@@ -660,7 +663,7 @@ abstract class Doctrine_Query_Abstract
 
         // No inheritance map so lets just return
         if (empty($map)) {
-          return;
+            return null;
         }
 
         $tableAlias = $this->getSqlTableAlias($componentAlias);
@@ -674,7 +677,7 @@ abstract class Doctrine_Query_Abstract
         // Fix for 2015: loop through whole inheritanceMap to add all
         // keyFields for inheritance (and not only the first)
         $retVal = "";
-        $count = 0;
+        $count  = 0;
 
         foreach ($map as $field => $value) {
             if ($count++ > 0) {
@@ -682,7 +685,7 @@ abstract class Doctrine_Query_Abstract
             }
 
             $identifier = $this->_conn->quoteIdentifier($tableAlias . $field);
-            $retVal .= $identifier . ' = ' . $this->_conn->quote($value);
+            $retVal     .= $identifier . ' = ' . $this->_conn->quote($value);
         }
 
         return $retVal;
