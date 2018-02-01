@@ -610,7 +610,7 @@ class Doctrine_Manager extends Doctrine_Configurable implements Countable, Itera
      * Sets the current connection to $key
      *
      * @param mixed $key                        the connection key
-     * @throws InvalidKeyException
+     * @throws Doctrine_Manager_Exception
      * @return void
      */
     public function setCurrentConnection($key)
