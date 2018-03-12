@@ -330,6 +330,7 @@ abstract class Doctrine_Query_Abstract
     }
 
     /**
+     * setAutoFree
      * Sets auto free
      *
      * @param boolean $value True or false (true by default)
