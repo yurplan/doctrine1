@@ -409,7 +409,7 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                 $needMatches = count($inheritanceMap);
                 foreach ($inheritanceMap as $key => $value) {
                     $key = $this->_tables[$component]->getFieldName($key);
-                    if ( isset($data[$key]) && $data[$key] == $value) {
+                    if (isset($data[$key]) && $data[$key] == $value) {
                         --$needMatches;
                     }
                 }
@@ -417,14 +417,14 @@ abstract class Doctrine_Hydrator_Graph extends Doctrine_Hydrator_Abstract
                     $matchedComponents[] = $table->getComponentName();
                 }
             } else {
-                foreach($inheritanceMap as $key => $value) {
-            $key = $this->_tables[$component]->getFieldName($key);
-            if ( ! isset($data[$key]) || $data[$key] != $value) {
-                continue;
-            } else {
-                $matchedComponents[] = $table->getComponentName();
-            }
-        }
+                foreach ($inheritanceMap as $key => $value) {
+                    $key = $this->_tables[$component]->getFieldName($key);
+                    if (!isset($data[$key]) || $data[$key] != $value) {
+                        continue;
+                    } else {
+                        $matchedComponents[] = $table->getComponentName();
+                    }
+                }
             }
         }
 
