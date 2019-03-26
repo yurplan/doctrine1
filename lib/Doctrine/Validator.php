@@ -104,25 +104,23 @@ class Doctrine_Validator extends Doctrine_Locator_Injectable
             $e = explode($decimalPoint, $value);
 
             $length = strlen($e[0]);
-            
+
             if (isset($e[1])) {
-                $length = $length + strlen($e[1]);
+                $length += strlen($e[1]);
             }
-        } else if ($type == 'blob') {
+        } else if ($type === 'blob') {
             $length = strlen($value);
         } else {
             $length = self::getStringLength($value);
         }
-        if ($length > $maximumLength) {
-            return false;
-        }
-        return true;
+
+        return $length <= $maximumLength;
     }
 
     /**
      * Get length of passed string. Will use multibyte character functions if they exist
      *
-     * @param string $string 
+     * @param string $string
      * @return integer $length
      */
     public static function getStringLength($string)
