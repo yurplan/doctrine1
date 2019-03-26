@@ -12,4 +12,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+- Fix array to string conversion in Validator.php by @endelwar [PR-31](https://github.com/FriendsOfSymfony1/doctrine1/pull/31)
 ### Security
