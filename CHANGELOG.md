@@ -12,5 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+- Fix PHP 7.3 backward incompatible with continue statements [PR-67](https://github.com/FriendsOfSymfony1/doctrine1/pull/67)
+- Remove `create_function` call as it is deprecated in 7.3 [PR-65](https://github.com/FriendsOfSymfony1/doctrine1/pull/65)
 - Fix array to string conversion in Validator.php by @endelwar [PR-31](https://github.com/FriendsOfSymfony1/doctrine1/pull/31)
 ### Security
