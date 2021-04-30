@@ -1221,7 +1221,18 @@ class Doctrine_Export extends Doctrine_Connection_Module
                  }
              }
 
-             $connection->commit();
+             try {
+                 $connection->commit();
+             } catch (PDOException $e) {
+                 // MySQL implicitely commits DDL queries, there will be no active transaction to commit
+                 // https://dev.mysql.com/doc/refman/5.7/en/implicit-commit.html
+                 // As of PHP 8.0, PDO::commit report this error instead of failing silently
+                 // https://github.com/php/php-src/commit/990bb34891c83d12c5129fd781893704f948f2f4
+                 if ($e->getMessage() != 'There is no active transaction') {
+                     throw $e;
+                 }
+             }
+
          }
      }
 
