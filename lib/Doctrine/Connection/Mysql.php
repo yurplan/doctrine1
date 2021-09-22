@@ -116,18 +116,6 @@ class Doctrine_Connection_Mysql extends Doctrine_Connection_Common
     }
 
     /**
-     * Set the charset on the current connection
-     *
-     * @param string    charset
-     */
-    public function setCharset($charset)
-    {
-        $query = 'SET NAMES ' . $this->quote($charset);
-        $this->exec($query);
-        parent::setCharset($charset);
-    }
-
-    /**
      * Execute a SQL REPLACE query. A REPLACE query is identical to a INSERT
      * query, except that if there is already a row in the table with the same
      * key field values, the REPLACE query just updates its values instead of
