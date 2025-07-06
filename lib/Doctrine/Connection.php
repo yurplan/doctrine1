@@ -1713,4 +1713,22 @@ abstract class Doctrine_Connection extends Doctrine_Configurable implements Coun
 
         return $name;
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $property => $value) {
+            $this->$property = $value;
+        }
+    }
 }

@@ -2716,4 +2716,22 @@ abstract class Doctrine_Record extends Doctrine_Record_Abstract implements Count
     {
         return (string) $this->_oid;
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $property => $value) {
+            $this->$property = $value;
+        }
+    }
 }
